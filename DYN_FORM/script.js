@@ -1,17 +1,5 @@
 'use strict'
-// let formIn = document.createElement('form');
-// formIn.method = 'POST';
-// formIn.action = "https://fe.it-academy.by/TestForm.php"
-// document.body.append(formIn);
 
-
-// let divIn = document.createElement('rt');
-// divIn.innerText = 'Название сайта:'
-// let input = document.createElement('input');
-// input.type = 'text';
-// input.name = 'sitename';
-// formIn.append(divIn);
-// divIn.append(input);
 var formDef2=
 [
   {label:'Фамилия:',kind:'longtext',name:'lastname'},
@@ -28,10 +16,10 @@ var formDef1=
   {label:'E-mail для связи:',kind:'shorttext',name:'email'},
   {label:'Рубрика каталога:',kind:'combo',name:'division',
     variants:[{text:'здоровье',value:1},{text:'домашний уют',value:2},{text:'бытовая техника',value:3}]},
-//   {label:'Размещение:',kind:'radio',name:'payment',
-//     variants:[{text:'бесплатное',value:1},{text:'платное',value:2},{text:'VIP',value:3}]},
-//   {label:'Разрешить отзывы:',kind:'check',name:'votes'},
-//   {label:'Описание сайта:',kind:'memo',name:'description'},
+  {label:'Размещение:',kind:'radio',name:'payment',
+    variants:[{text:'бесплатное',value:1},{text:'платное',value:2},{text:'VIP',value:3}]},
+  {label:'Разрешить отзывы:',kind:'check',name:'votes'},
+  {label:'Описание сайта:',kind:'memo',name:'description'},
   {caption:'Опубликовать',kind:'submit'},
 ];
 function addForm(form){
@@ -49,20 +37,36 @@ function addForm(form){
         if(element.kind === 'longtext'){
             input.type = 'text'; 
         } else if(element.kind === 'number'){
-            input.type = element.kind;
+            input.type = 'number';
         } else if(element.kind === 'shorttext'){
             input.type = 'email';
         } else if(element.kind === 'combo'){
-            console.log('я здесь')
             input = document.createElement('select');
             element.variants.forEach(el =>{
-                let option = new Option(el.text,el.text);
+                let option = new Option(el.text);
                 option.value = el.value; 
                 input.append(option);                
             });
         } else if(element.kind === 'submit'){
-            input.type = element.kind;
+            input.type = 'submit';
             input.value = element.caption;
+        } else if(element.kind === 'radio'){
+            input = document.createElement('td')
+            element.variants.forEach(el =>{
+            let radioIn = document.createElement('input');
+            let textRadio = document.createTextNode(el.text);
+            radioIn.type = 'radio';
+            radioIn.name = element.name;
+            radioIn.value = el.value;
+            input.append(radioIn);
+            
+            input.append(textRadio);
+            })
+        } else if(element.kind === 'check'){
+            input.type = 'checkbox';
+            input.checked = 'true';
+        } else if(element.kind === 'memo'){
+            input = document.createElement('textarea');
         };
         input.name = element.name;
         input.style = 'display:block';
