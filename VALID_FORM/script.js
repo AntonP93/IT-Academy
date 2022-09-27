@@ -122,7 +122,7 @@ inpComments.addEventListener('click',function(EO){
     EO = EO||window.Event;
     alertMassegeChek(this);    
 },false);
-inpRubric.addEventListener('focusout',function(EO){
+inpRubric.addEventListener('change',function(EO){
     EO = EO||window.Event;
     alertMassegeOption(this)
 },false);
