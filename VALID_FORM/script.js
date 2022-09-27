@@ -11,7 +11,6 @@ const inpPublic = frmTag.elements["public"];
 const inpComments = frmTag.elements["comments"];
 const inpArticle = frmTag.elements["article"];
 
-
 //массив текстовх инпутов
 let  elemsText =[inpAutor,inpTitle,inpAddres,inpPersons,inpEmail,inpArticle,inpDate];
 
@@ -66,7 +65,7 @@ function alertMassegeRadio(element){
 
 function alertMassegeChek(element){
     let tdParent = element.parentNode;
-    let mas_check = document.querySelector('.mas_check')
+    let mas_check = document.querySelector('.mas_check');
     if(!element.checked){
         if(!mas_check){
             let massege = document.createElement('span');
@@ -86,9 +85,28 @@ function alertMassegeChek(element){
     }
 }
 
-
-
-
+function alertMassegeOption(element){
+    let tdParent = element.parentNode;
+    console.log(tdParent) 
+    let mas_option = document.querySelector('.mas_option')
+    if(element.value == 2){
+        if(!mas_option){
+            let massege = document.createElement('span');
+            massege.className = 'mas_option'
+            massege.style.color = "red";
+            massege.innerText = "Сделайте правильный выбор!";
+            tdParent.appendChild(massege);
+        };
+        return true;     
+    } else {
+        if(element.value !== 2){
+            if(mas_option){
+                mas_option.remove();
+            }
+        }
+        return false;
+    }    
+}
 
 elemsText.forEach(element => {
     element.addEventListener('focusout',function(EO){
@@ -103,7 +121,11 @@ inpPublic[1].parentNode.addEventListener('click',function(EO){
 inpComments.addEventListener('click',function(EO){
     EO = EO||window.Event;
     alertMassegeChek(this);    
-},false); 
+},false);
+inpRubric.addEventListener('focusout',function(EO){
+    EO = EO||window.Event;
+    alertMassegeOption(this)
+},false);
 
 
 
@@ -114,6 +136,7 @@ frmTag.addEventListener('submit',function(eo){
     });
     alertMassegeRadio(inpPublic);
     alertMassegeChek(inpComments);
+    alertMassegeOption(inpRubric);
 
     try{
         if(alertMassege(inpAutor)){
@@ -151,6 +174,11 @@ frmTag.addEventListener('submit',function(eo){
             eo.preventDefault(); 
             return;   
         }
+        if (alertMassegeOption(inpRubric)) {
+            inpRubric.focus();
+            eo.preventDefault();
+            return;
+        }
         if(alertMassegeRadio(inpPublic)){
             inpPublic[0].parentNode.scrollIntoView()
             eo.preventDefault(); 
@@ -173,13 +201,13 @@ frmTag.addEventListener('submit',function(eo){
 
 
 // console.log(inpPublic)
-const btn = document.querySelector('.Btn');
+// const btn = document.querySelector('.Btn');
 
-btn.addEventListener('click',function(EO){
-    EO = EO||window.Event;
-    alertMassegeRadio(inpPublic);
+// btn.addEventListener('click',function(EO){
+//     EO = EO||window.Event;
+//     alertMassegeOption(inpRubric)
       
-},false);
+// },false);
 
 
 
