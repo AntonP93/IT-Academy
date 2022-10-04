@@ -1,8 +1,6 @@
 'use strict'
 let elements = document.getElementsByTagName('img');
-let body = document.getElementsByTagName('body');
 let zIndexValue = 1;
-console.log(body)
 window.addEventListener('load',function(EO){
     EO = EO||window.Event;
     for(let i = 0; i < elements.length;i++){
