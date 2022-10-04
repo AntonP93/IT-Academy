@@ -8,7 +8,8 @@ window.addEventListener('load',function(EO){
     for(let i = 0; i < elements.length;i++){
         let element = elements[i];
         element.style.left = element.offsetLeft+'px';
-        element.style.top = element.offsetTop+'px'; 
+        element.style.top = element.offsetTop+'px';
+        element.style.padding = '0px' 
     }
     for(let i= 0; i <elements.length;i++){
         let element = elements[i];
