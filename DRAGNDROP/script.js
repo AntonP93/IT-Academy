@@ -47,38 +47,6 @@ window.addEventListener('load',function(EO){
 
     }
 
-
-
-    // for(let i= 0; i <elements.length;i++){
-    //     let element = elements[i];
-    //     element.style.position = 'absolute';
-    //     element.addEventListener('mousedown',downCoordinate,false);
-    //     element.addEventListener('mouseup',function(EO){
-    //         EO.preventDefault();
-    //         element.removeEventListener('mousedown',downCoordinate,false)
-    //         console.log('отпустил')    
-    //     },false)
-
-    // }
-    // function downCoordinate(EO){
-    //     EO = EO||window.Event;
-    //     EO.preventDefault();
-    //     console.log(EO.target);
-    //     let downX = EO.pageX - EO.target.offsetLeft;
-    //     let downY = EO.pageY - EO.target.offsetTop;
-    //     console.log(downX,downY)
-    //     window.addEventListener('mousemove',function(EO){
-    //         EO = EO||window.Event;
-    //         EO.preventDefault();
-    //         console.log('движение') 
-    //         EO.target.style.top = (EO.pageY-downY) +'px';
-    //         EO.target.style.left = (EO.pageX-downX) +'px';
-            
-    //     },false)   
-    // }
-    
-
-
 },false);
 
 
