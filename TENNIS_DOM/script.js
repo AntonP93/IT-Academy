@@ -16,7 +16,7 @@ const racket_left = {
     height : 100,
     speedY : 0,
     posX : 0,
-    posY : 200,
+    posY : 200 ,
     moveDown : function(){
         this.speedY = 5;
     },
@@ -38,7 +38,7 @@ const racket_right = {
     height : 100,
     speedY : 0,
     posX : areaField.width - 10,// 10(ширина ракетки)
-    posY : 200,
+    posY : 200 ,
     moveDown : function(){
 
         this.speedY = 5;
@@ -58,12 +58,12 @@ const racket_right = {
 
 }
 const ball={
-    posX : 30,
-    posY : 30,
-    speedX : 5,
-    speedY : 5,
-    width : 25,
-    height: 25,
+    posX : 300 - (20/2),
+    posY : 200 - (20/2),
+    speedX : 2,
+    speedY : 2,
+    width : 20,
+    height: 20,
 
     update : function() {
         game_ball.style.left=this.posX+"px";
@@ -90,11 +90,13 @@ gameField.appendChild(game_ball);
 document.addEventListener('keydown',function(event){
     if(event.code == 'ShiftLeft'){
         racket_left.moveUP();
-        console.log('нажал shift')
+        console.log(racket_left.posY, racket_left.posY + 100, ball.posY);
+        console.log(ball.posX, racket_left.posX+racket_left.width)
     }
     if(event.code == 'ControlLeft'){
         racket_left.moveDown();
-        console.log('нажал ctrl')
+        console.log(racket_left.posY, racket_left.posY + 100, ball.posY);
+        console.log(ball.posX, racket_left.posX+racket_left.width)
     }
     
 },true)
@@ -102,12 +104,12 @@ document.addEventListener('keydown',function(event){
 document.addEventListener('keyup',function(event){
     if(event.code == 'ShiftLeft'){
         racket_left.noMove();
-        console.log('del shift')
+
         
     }
     if(event.code == 'ControlLeft'){
         racket_left.noMove();
-        console.log('del ctrl') 
+
     }
 },true)
 
@@ -116,9 +118,11 @@ document.addEventListener('keyup',function(event){
 document.addEventListener('keydown',function(event){
     if(event.code == 'ArrowUp'){
         racket_right.moveUP();
+        console.log(racket_right.posY)
     }
     if(event.code == 'ArrowDown'){
         racket_right.moveDown();
+        console.log(racket_right.posY)
     }
     
 
@@ -126,9 +130,11 @@ document.addEventListener('keydown',function(event){
 document.addEventListener('keyup',function(event){
     if(event.code == 'ArrowUp'){
         racket_right.noMove();
+        
     }
     if(event.code == 'ArrowDown'){
         racket_right.noMove();
+
     }
     
 
@@ -140,28 +146,41 @@ function start(){
 };
 
 function tick(){
-    
-    
-    if(racket_left.posY > 0 && racket_left.posY < 300  ){
-        racket_left.posY += racket_left.speedY;  
+    racket_left.posY += racket_left.speedY; 
+    if(racket_left.posY > 300){
+        racket_left.posY = 300;
+        racket_left.speedY = 0;
+    } else if(racket_left.posY < 0){
+        racket_left.posY = 0;
+        racket_left.speedY = 0;
     }
     racket_right.posY += racket_right.speedY;
+    if(racket_right.posY > 300){
+        racket_right.posY = 300;
+        racket_right.speedY = 0;
+    } else if(racket_right.posY < 0){
+        racket_right.posY = 0;
+        racket_right.speedY = 0;
+    }
     racket_left.update(); 
     racket_right.update();
 
-
+    ball.posY+=ball.speedY;
     ball.posX+=ball.speedX;
-    if ( ball.posX+ball.width>areaField.width ) {
+    if ( ball.posX< racket_left.posX+racket_left.width &&  ball.posY <= racket_left.posY && ball.posY <= racket_left.posY + 100 ) {
         ball.speedX=-ball.speedX;
-        ball.posX=areaField.width-ball.width;
+        ball.posX= racket_left.width;
+        console.log('отбил левый')
     }
     
-    if ( ball.posX<0 ) {
+    if ( ball.posX>racket_right.posX &&  ball.posY < racket_right.posY + 50 && ball.posY > racket_right.posY - 50) {
         ball.speedX=-ball.speedX;
-        ball.posX=0;
-    }
+        ball.posX= racket_right.posX -ball.width;
+        console.log('отбил прав')
 
-    ball.posY+=ball.speedY;
+    }
+    
+    
 
     if ( ball.posY+ball.height>areaField.height ) {
         ball.speedY=-ball.speedY;
@@ -172,11 +191,28 @@ function tick(){
         ball.speedY=-ball.speedY;
         ball.posY=0;
     }
+    if ( ball.posX<0 ) {
+        ball.speedX=0;
+        ball.speedY = 0
+        ball.posX=0;
+        
+    }
+    if ( ball.posX>areaField.width ) {
+        ball.speedX=0;
+        ball.speedY = 0;
+        ball.posX=areaField.width-ball.width;
+        
+    }
     ball.update();
 }
 
 ball.update();
-
 start()
-
-
+btn_start.addEventListener('click',function(){
+    ball.update();
+    ball.posX = 300 - 10,
+    ball.posY = 200 - 10,
+    ball.speedX = 2,
+    ball.speedY = 2,
+    console.log('rclick')
+})
