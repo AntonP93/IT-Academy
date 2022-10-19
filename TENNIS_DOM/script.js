@@ -91,12 +91,10 @@ document.addEventListener('keydown',function(event){
     if(event.code == 'ShiftLeft'){
         racket_left.moveUP();
         console.log(racket_left.posY, racket_left.posY + 100, ball.posY);
-        console.log(ball.posX, racket_left.posX+racket_left.width)
     }
     if(event.code == 'ControlLeft'){
         racket_left.moveDown();
         console.log(racket_left.posY, racket_left.posY + 100, ball.posY);
-        console.log(ball.posX, racket_left.posX+racket_left.width)
     }
     
 },true)
@@ -167,6 +165,8 @@ function tick(){
 
     ball.posY+=ball.speedY;
     ball.posX+=ball.speedX;
+
+    
     if ( ball.posX< racket_left.posX+racket_left.width &&  ball.posY <= racket_left.posY && ball.posY <= racket_left.posY + 100 ) {
         ball.speedX=-ball.speedX;
         ball.posX= racket_left.width;
