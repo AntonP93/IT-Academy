@@ -225,3 +225,6 @@ btn_start.addEventListener('click',function(){
     ball.speedY = randomArr[randomNum(0,5)]
 })
 
+function randomNum(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}  
