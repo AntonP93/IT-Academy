@@ -2,8 +2,12 @@ let btn_start = document.querySelector('.start_game');
 let gameField = document.querySelector('.game_field');
 let game_ball = document.createElement('div');
 let racket_left_field = document.createElement('div');
-
 let racket_right_field = document.createElement('div');
+let scoreText = document.querySelector('.score')
+const heighRacket = 100;
+let countLeftplayer = 0;
+let countRightplayer = 0;
+let randomArr = [2,-2,3,-3,4,-4];
 
 
 const areaField = {
@@ -13,10 +17,10 @@ const areaField = {
 }
 const racket_left = {
     width : 10,
-    height : 100,
+    height : heighRacket,
     speedY : 0,
     posX : 0,
-    posY : 200 ,
+    posY : 200 -(heighRacket/2) ,
     moveDown : function(){
         this.speedY = 5;
     },
@@ -35,10 +39,10 @@ const racket_left = {
 }
 const racket_right = {
     width : 10,
-    height : 100,
+    height : heighRacket,
     speedY : 0,
     posX : areaField.width - 10,// 10(ширина ракетки)
-    posY : 200 ,
+    posY : 200 -(heighRacket/2) ,
     moveDown : function(){
 
         this.speedY = 5;
@@ -58,10 +62,10 @@ const racket_right = {
 
 }
 const ball={
-    posX : 300 - (20/2),
-    posY : 200 - (20/2),
-    speedX : 2,
-    speedY : 2,
+    posX : 300 - (20/2),// центр
+    posY : 200 - (20/2),// центр
+    speedX : 0,
+    speedY : 0,
     width : 20,
     height: 20,
 
@@ -90,11 +94,11 @@ gameField.appendChild(game_ball);
 document.addEventListener('keydown',function(event){
     if(event.code == 'ShiftLeft'){
         racket_left.moveUP();
-        console.log(racket_left.posY, racket_left.posY + 100, ball.posY);
+        console.log(racket_left.posY, racket_left.posY + heighRacket, ball.posY);
     }
     if(event.code == 'ControlLeft'){
         racket_left.moveDown();
-        console.log(racket_left.posY, racket_left.posY + 100, ball.posY);
+        console.log(racket_left.posY, racket_left.posY + heighRacket, ball.posY);
     }
     
 },true)
@@ -139,11 +143,11 @@ document.addEventListener('keyup',function(event){
 },true)
 
 
-function start(){
-    setInterval(tick,30);
-};
+
 
 function tick(){
+    ball.posY+=ball.speedY;
+    ball.posX+=ball.speedX;
     racket_left.posY += racket_left.speedY; 
     if(racket_left.posY > 300){
         racket_left.posY = 300;
@@ -163,19 +167,18 @@ function tick(){
     racket_left.update(); 
     racket_right.update();
 
-    ball.posY+=ball.speedY;
-    ball.posX+=ball.speedX;
+   
 
     
-    if ( ball.posX< racket_left.posX+racket_left.width &&  ball.posY <= racket_left.posY && ball.posY <= racket_left.posY + 100 ) {
-        ball.speedX=-ball.speedX;
+    if (ball.posX < racket_left.posX + racket_left.width &&   ball.posY < racket_left.posY + heighRacket &&  ball.posY > racket_left.posY - ball.height  ) {
+        ball.speedX=-ball.speedX*1.2;
         ball.posX= racket_left.width;
         console.log('отбил левый')
     }
     
-    if ( ball.posX>racket_right.posX &&  ball.posY < racket_right.posY + 50 && ball.posY > racket_right.posY - 50) {
-        ball.speedX=-ball.speedX;
-        ball.posX= racket_right.posX -ball.width;
+    if ( ball.posX + ball.width>racket_right.posX && ball.posY < racket_right.posY + heighRacket  &&  ball.posY > racket_right.posY - ball.height) {
+        ball.speedX=-ball.speedX*1.2;
+        ball.posX= racket_right.posX - ball.width ;
         console.log('отбил прав')
 
     }
@@ -195,24 +198,30 @@ function tick(){
         ball.speedX=0;
         ball.speedY = 0
         ball.posX=0;
+        countRightplayer++;
+        scoreText.innerHTML = `${countLeftplayer}:${countRightplayer}`
         
     }
-    if ( ball.posX>areaField.width ) {
+    if ( ball.posX + ball.width>areaField.width ) {
         ball.speedX=0;
         ball.speedY = 0;
         ball.posX=areaField.width-ball.width;
-        
+        countLeftplayer++;
+        scoreText.innerHTML = `${countLeftplayer}:${countRightplayer}`
     }
     ball.update();
 }
 
 ball.update();
-start()
+function start(){
+    setInterval(tick,25);
+};
+start();
 btn_start.addEventListener('click',function(){
     ball.update();
     ball.posX = 300 - 10,
     ball.posY = 200 - 10,
-    ball.speedX = 2,
-    ball.speedY = 2,
-    console.log('rclick')
+    ball.speedX = randomArr[randomNum(0,5)],
+    ball.speedY = randomArr[randomNum(0,5)]
 })
+
