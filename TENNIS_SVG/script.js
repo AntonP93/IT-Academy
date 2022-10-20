@@ -87,8 +87,8 @@ const racket_right = {
 const ball={
     posX : 300,// центр
     posY : 200,// центр
-    speedX : -2,
-    speedY : 2,
+    speedX : 0,
+    speedY : 0,
     width : 20,
     height: 20,
     radius: 10,
