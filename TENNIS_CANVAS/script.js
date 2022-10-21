@@ -13,7 +13,7 @@ const areaField = {
 }
 
 const racket_left = {
-    width : 10,
+    width : 20,
     height : heighRacket,
     speedY : 0,
     posX : 0,
@@ -29,10 +29,10 @@ const racket_left = {
     },   
 }
 const racket_right = {
-    width : 10,
+    width : 20,
     height : heighRacket,
     speedY : 0,
-    posX : areaField.width - 10,// 10(ширина ракетки)
+    posX : areaField.width - 20,// 10(ширина ракетки)
     posY : 200 -(heighRacket/2) ,
     moveDown : function(){
 
@@ -172,12 +172,12 @@ function tick(){
 
 
 
-    if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY - ball.radius < racket_left.posY + heighRacket &&  ball.posY + ball.radius > racket_left.posY - ball.radius  ) {
+    if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY - ball.radius < racket_left.posY + heighRacket &&  ball.posY + ball.radius > racket_left.posY) {
         ball.speedX=-ball.speedX;
         ball.posX= racket_left.width+ball.radius;
     }
     
-    if ( ball.posX + ball.radius >racket_right.posX && ball.posY + ball.radius < racket_right.posY + heighRacket  &&  ball.posY + ball.radius > racket_right.posY - ball.radius) {
+    if ( ball.posX + ball.radius >racket_right.posX && ball.posY - ball.radius < racket_right.posY + heighRacket  &&  ball.posY + ball.radius > racket_right.posY ) {
         ball.speedX=-ball.speedX;
         ball.posX= racket_right.posX - ball.radius ;
 
