@@ -37,16 +37,16 @@ btn_text.textContent = 'Start!';
 btn_start.appendChild(btn_text);
 
 gameField.setAttribute('width',`${areaField.width}`);
-    gameField.setAttribute('height',`${areaField.height}`);
+gameField.setAttribute('height',`${areaField.height}`);
 
-    const field = document.createElementNS("http://www.w3.org/2000/svg",'rect');
-    field.setAttribute('x','0');
-    field.setAttribute('y','0');
-    field.setAttribute('width',`${areaField.width}`);
-    field.setAttribute('height',`${areaField.height}`);
-    field.setAttribute('fill','green');
-    field.setAttribute('stroke','black');
-    gameField.appendChild(field);
+const field = document.createElementNS("http://www.w3.org/2000/svg",'rect');
+field.setAttribute('x','0');
+field.setAttribute('y','0');
+field.setAttribute('width',`${areaField.width}`);
+field.setAttribute('height',`${areaField.height}`);
+field.setAttribute('fill','green');
+field.setAttribute('stroke','black');
+gameField.appendChild(field);
 
 const racket_left = {
     width : 10,
@@ -63,6 +63,10 @@ const racket_left = {
     noMove : function(){
         this.speedY = 0;
     },
+    positionRacket_left : function(){
+        racket_left_field.setAttribute('x',`${racket_left.posX}`);
+        racket_left_field.setAttribute('y',`${racket_left.posY}`);     
+    }
     
 }
 const racket_right = {
@@ -81,6 +85,12 @@ const racket_right = {
     noMove : function(){
         this.speedY = 0;
     },
+    positionRacket_right : function(){
+        racket_right_field.setAttribute('x',`${racket_right.posX}`);
+        racket_right_field.setAttribute('y',`${racket_right.posY}`);     
+    }
+
+
    
 
 }
@@ -92,7 +102,30 @@ const ball={
     width : 20,
     height: 20,
     radius: 10,
+
+    positin_ball : function(){
+        ball_field.setAttribute("cx",`${ball.posX}`);
+        ball_field.setAttribute("cy",`${ball.posY}`);    
+    }
 }
+
+
+racket_left_field.setAttribute('width',`${racket_left.width}`);
+racket_left_field.setAttribute('height',`${racket_left.height}`);
+racket_left_field.setAttribute('fill','black');
+gameField.appendChild(racket_left_field);
+
+
+
+racket_right_field.setAttribute('width',`${racket_right.width}`);
+racket_right_field.setAttribute('height',`${racket_right.height}`);
+racket_right_field.setAttribute('fill','black');
+gameField.appendChild(racket_right_field);
+
+
+ball_field.setAttribute("r",`${ball.radius}`);
+ball_field.setAttribute("fill","red");
+gameField.appendChild(ball_field);
 
 document.addEventListener('keydown',function(event){
     if(event.code == 'ShiftLeft'){
@@ -148,6 +181,12 @@ function tick(){
     ball.posY+=ball.speedY;
     ball.posX+=ball.speedX;
 
+    ball.positin_ball();
+    racket_left.positionRacket_left();
+    racket_right.positionRacket_right();
+
+    
+
     racket_left.posY += racket_left.speedY; 
     if(racket_left.posY > 300){
         racket_left.posY = 300;
@@ -195,42 +234,17 @@ function tick(){
 
 
     if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY - ball.radius < racket_left.posY + heighRacket &&  ball.posY + ball.radius > racket_left.posY - ball.radius  ) {
-        ball.speedX=-ball.speedX*1.2;
+        ball.speedX=-ball.speedX;
         ball.posX= racket_left.width+ball.radius;
         console.log('отбил левый')
     }
     
     if ( ball.posX + ball.radius >racket_right.posX && ball.posY + ball.radius < racket_right.posY + heighRacket  &&  ball.posY + ball.radius > racket_right.posY - ball.radius) {
-        ball.speedX=-ball.speedX*1.2;
+        ball.speedX=-ball.speedX;
         ball.posX= racket_right.posX - ball.radius ;
         console.log('отбил прав')
 
     }    
-    
-    racket_left_field.setAttribute('x',`${racket_left.posX}`);
-    racket_left_field.setAttribute('y',`${racket_left.posY}`);
-    racket_left_field.setAttribute('width',`${racket_left.width}`);
-    racket_left_field.setAttribute('height',`${racket_left.height}`);
-    racket_left_field.setAttribute('fill','black');
-    // racket_left_field.setAttribute('stroke','black');
-    gameField.appendChild(racket_left_field);
-    
-   
-    racket_right_field.setAttribute('x',`${racket_right.posX}`);
-    racket_right_field.setAttribute('y',`${racket_right.posY}`);
-    racket_right_field.setAttribute('width',`${racket_right.width}`);
-    racket_right_field.setAttribute('height',`${racket_right.height}`);
-    racket_right_field.setAttribute('fill','black');
-   
-    gameField.appendChild(racket_right_field);
-
-    
-    ball_field.setAttribute("cx",`${ball.posX}`);
-    ball_field.setAttribute("cy",`${ball.posY}`);
-    ball_field.setAttribute("r",`${ball.radius}`);
-    ball_field.setAttribute("fill","red");
-    gameField.appendChild(ball_field);
-
 
 }
 tick();
