@@ -109,6 +109,44 @@ function tick(){
     ball.posY+=ball.speedY;
     ball.posX+=ball.speedX;
 
+    if ( ball.posY+ball.radius>areaField.height ) {
+        ball.speedY=-ball.speedY;
+        ball.posY=areaField.height-ball.radius;
+    }
+ 
+    if ( ball.posY- ball.radius<0 ) {
+        ball.speedY=-ball.speedY;
+        ball.posY= ball.radius;
+    }
+    if ( ball.posX - ball.radius<0 ) {
+        ball.speedX=0;
+        ball.speedY = 0
+        ball.posX=ball.radius;
+        countRightplayer++;
+        scoreText.innerHTML = `${countLeftplayer}:${countRightplayer}`
+        
+    }
+    if ( ball.posX + ball.radius>areaField.width ) {
+        ball.speedX=0;
+        ball.speedY = 0;
+        ball.posX=areaField.width-ball.radius;
+        countLeftplayer++;
+        scoreText.innerHTML = `${countLeftplayer}:${countRightplayer}`
+    }
+
+
+
+    if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY< racket_left.posY + heighRacket &&  ball.posY> racket_left.posY) {
+        ball.speedX=-ball.speedX;
+        ball.posX= racket_left.width+ball.radius;
+    }
+    
+    if ( ball.posX + ball.radius >racket_right.posX && ball.posY - ball.radius < racket_right.posY + heighRacket  &&  ball.posY + ball.radius > racket_right.posY ) {
+        ball.speedX=-ball.speedX;
+        ball.posX= racket_right.posX - ball.radius ;
+
+
+    }    
     context.fillStyle = "green";
     context.fillRect(0,0,field_CVS.width,field_CVS.height);
 
@@ -145,44 +183,7 @@ function tick(){
 
 
 
-    if ( ball.posY+ball.radius>areaField.height ) {
-        ball.speedY=-ball.speedY;
-        ball.posY=areaField.height-ball.radius;
-    }
- 
-    if ( ball.posY- ball.radius<0 ) {
-        ball.speedY=-ball.speedY;
-        ball.posY= ball.radius;
-    }
-    if ( ball.posX - ball.radius<0 ) {
-        ball.speedX=0;
-        ball.speedY = 0
-        ball.posX=ball.radius;
-        countRightplayer++;
-        scoreText.innerHTML = `${countLeftplayer}:${countRightplayer}`
-        
-    }
-    if ( ball.posX + ball.radius>areaField.width ) {
-        ball.speedX=0;
-        ball.speedY = 0;
-        ball.posX=areaField.width-ball.radius;
-        countLeftplayer++;
-        scoreText.innerHTML = `${countLeftplayer}:${countRightplayer}`
-    }
-
-
-
-    if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY - ball.radius < racket_left.posY + heighRacket &&  ball.posY + ball.radius > racket_left.posY) {
-        ball.speedX=-ball.speedX;
-        ball.posX= racket_left.width+ball.radius;
-    }
-    
-    if ( ball.posX + ball.radius >racket_right.posX && ball.posY - ball.radius < racket_right.posY + heighRacket  &&  ball.posY + ball.radius > racket_right.posY ) {
-        ball.speedX=-ball.speedX;
-        ball.posX= racket_right.posX - ball.radius ;
-
-
-    }    
+  
 
 }
 

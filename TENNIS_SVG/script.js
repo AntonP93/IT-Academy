@@ -181,31 +181,6 @@ function tick(){
     ball.posY+=ball.speedY;
     ball.posX+=ball.speedX;
 
-    ball.positin_ball();
-    racket_left.positionRacket_left();
-    racket_right.positionRacket_right();
-
-    
-
-    racket_left.posY += racket_left.speedY; 
-    if(racket_left.posY > 300){
-        racket_left.posY = 300;
-        racket_left.speedY = 0;
-    } else if(racket_left.posY < 0){
-        racket_left.posY = 0;
-        racket_left.speedY = 0;
-    }
-    racket_right.posY += racket_right.speedY;
-    if(racket_right.posY > 300){
-        racket_right.posY = 300;
-        racket_right.speedY = 0;
-    } else if(racket_right.posY < 0){
-        racket_right.posY = 0;
-        racket_right.speedY = 0;
-    }
-
-
-
     if ( ball.posY+ball.radius>areaField.height ) {
         ball.speedY=-ball.speedY;
         ball.posY=areaField.height-ball.radius;
@@ -233,18 +208,45 @@ function tick(){
 
 
 
-    if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY - ball.radius < racket_left.posY + heighRacket &&  ball.posY + ball.radius > racket_left.posY) {
+    if (ball.posX - ball.radius < racket_left.posX + racket_left.width &&   ball.posY < racket_left.posY + heighRacket &&  ball.posY > racket_left.posY) {
         ball.speedX=-ball.speedX;
         ball.posX= racket_left.width+ball.radius;
         console.log('отбил левый')
     }
     
-    if ( ball.posX + ball.radius >racket_right.posX && ball.posY - ball.radius < racket_right.posY + heighRacket  &&  ball.posY + ball.radius > racket_right.posY ) {
+    if ( ball.posX + ball.radius >racket_right.posX && ball.posY < racket_right.posY + heighRacket  &&  ball.posY > racket_right.posY ) {
         ball.speedX=-ball.speedX;
         ball.posX= racket_right.posX - ball.radius ;
         console.log('отбил прав')
 
-    }    
+    } 
+
+    ball.positin_ball();
+    racket_left.positionRacket_left();
+    racket_right.positionRacket_right();
+
+    
+
+    racket_left.posY += racket_left.speedY; 
+    if(racket_left.posY > 300){
+        racket_left.posY = 300;
+        racket_left.speedY = 0;
+    } else if(racket_left.posY < 0){
+        racket_left.posY = 0;
+        racket_left.speedY = 0;
+    }
+    racket_right.posY += racket_right.speedY;
+    if(racket_right.posY > 300){
+        racket_right.posY = 300;
+        racket_right.speedY = 0;
+    } else if(racket_right.posY < 0){
+        racket_right.posY = 0;
+        racket_right.speedY = 0;
+    }
+
+
+
+       
 
 }
 tick();
