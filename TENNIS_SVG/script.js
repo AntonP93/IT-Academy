@@ -246,13 +246,13 @@ function tick(){
 
 
 
-       
+    requestAnimationFrame(tick) ;      
 
 }
 tick();
 start();
 function start(){
-    setInterval(tick,25);
+    requestAnimationFrame(tick);
 };
 btn_start.addEventListener('click',function(EO){
     EO.preventDefault();
