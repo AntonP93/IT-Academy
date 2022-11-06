@@ -16,7 +16,7 @@ const  hit = 10;
 
 
 
-CVS.width = 1500;
+CVS.width = 1024;
 CVS.height = 576;
 
 context.fillRect(0,0,CVS.width, CVS.height);
@@ -85,19 +85,42 @@ class Player{
 }
 
 class Sprite {
-    constructor({position,imgSrc}){
+    constructor({position,imgSrc,width,height,scale = 1, framesMax = 1}){
         this.image = new Image();
         this.position = position;
         this.image.src = imgSrc;
-        
-        
+        this.width = width;
+        this.height = height;
+        this.scale = scale;
+        this.framesMax = framesMax;
+        this.frameCurr = 0;
+        this.framesElapsed=0
+        this.framesHold=5
     }
     view(){
-        context.drawImage(this.image,this.position.x, this.position.y,CVS.width,CVS.height)        
+        context.drawImage(
+            this.image,
+            this.frameCurr * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            this.position.x,
+            this.position.y,
+            (this.image.width / this.framesMax )* this.scale,
+            this.image.height * this.scale
+        )        
     }
 
     update(){
-        this.view();   
+        this.view();
+        if(this.framesElapsed % this.framesHold === 0){
+            if(this.frameCurr < this.framesMax-1) {
+                this.frameCurr++
+            } else {
+                this.frameCurr = 0;
+            }  
+        }
+        
     }
 }
 // характеристика игрока 1
@@ -135,7 +158,12 @@ const backgrnd = new Sprite({
         x:0,
         y:0
     },
-    imgSrc:'img/MK_background.jpg' 
+    imgSrc:'img/MK_background.jpg',
+    width:CVS.width,
+    height:CVS.height,
+    scale: 0.86,
+    framesMax: 1,
+    
 
 })
 
