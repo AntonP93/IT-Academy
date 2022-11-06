@@ -1,0 +1,57 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    padding: 0;
+    margin: 0 auto;
+}
+.wrap{
+    position: relative;
+    display: inline-block;
+    margin: 0px;
+}
+
+
+.health_timer_panel{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+}
+.wrap_health{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    background-color:blue;
+    
+}
+.wrap_health1{
+    display: flex;
+    justify-content: end;
+}
+.health_player1{
+    background-color:red;
+    height: 100%;
+    width: 100%;
+}
+.timer{
+    background:url(img/Mortal-Kombat-Logo.png) center center/cover no-repeat;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.health_player2{
+    background-color:red;
+    height: 100%;
+    width: 100%;
+}
+.timer{
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
