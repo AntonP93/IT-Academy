@@ -22,14 +22,62 @@ CVS.height = 576;
 context.fillRect(0,0,CVS.width, CVS.height);
 // let img_CVS = new Image
 
-//спрайт игрока
-class Player{
-    constructor({position,speed,color,vector}){
+
+class Sprite {
+    constructor({position,imgSrc,scale = 1, framesMax = 1}){
+        this.image = new Image();
         this.position = position;
+        this.image.src = imgSrc;
+        this.scale = scale;
+        this.framesMax = framesMax;
+        this.frameCurr = 0;
+        this.framesElapsed=0
+        this.framesHold=5
+    }
+    view(){
+        context.drawImage(
+            this.image,
+            this.frameCurr * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            this.position.x,
+            this.position.y,
+            (this.image.width / this.framesMax )* this.scale,
+            this.image.height * this.scale
+        )        
+    }
+
+    update(){
+        this.view();
+        if(this.framesElapsed % this.framesHold === 0){
+            if(this.frameCurr < this.framesMax-1) {
+                this.frameCurr++
+            } else {
+                this.frameCurr = 0;
+            }  
+        }
+        
+    }
+}
+
+
+//спрайт игрока
+class Player extends Sprite{
+    constructor({position,speed,color,vector,imgSrc,scale = 1, framesMax = 1}){
+        super({
+            position,
+            imgSrc,
+            scale,
+            framesMax,   
+        })
         this.speed = speed;
         this.height = 150;
         this.width = 50;
         this.health = 100;
+        this.frameCurr = 0;
+        this.framesElapsed=0;
+        this.framesHold=5;
         this.attackArm = {
             position: {
                 x: this.position.x,
@@ -84,45 +132,7 @@ class Player{
     }
 }
 
-class Sprite {
-    constructor({position,imgSrc,width,height,scale = 1, framesMax = 1}){
-        this.image = new Image();
-        this.position = position;
-        this.image.src = imgSrc;
-        this.width = width;
-        this.height = height;
-        this.scale = scale;
-        this.framesMax = framesMax;
-        this.frameCurr = 0;
-        this.framesElapsed=0
-        this.framesHold=5
-    }
-    view(){
-        context.drawImage(
-            this.image,
-            this.frameCurr * (this.image.width / this.framesMax),
-            0,
-            this.image.width / this.framesMax,
-            this.image.height,
-            this.position.x,
-            this.position.y,
-            (this.image.width / this.framesMax )* this.scale,
-            this.image.height * this.scale
-        )        
-    }
 
-    update(){
-        this.view();
-        if(this.framesElapsed % this.framesHold === 0){
-            if(this.frameCurr < this.framesMax-1) {
-                this.frameCurr++
-            } else {
-                this.frameCurr = 0;
-            }  
-        }
-        
-    }
-}
 // характеристика игрока 1
 const Player1 = new Player({
     position: {
@@ -159,8 +169,6 @@ const backgrnd = new Sprite({
         y:0
     },
     imgSrc:'img/MK_background.jpg',
-    width:CVS.width,
-    height:CVS.height,
     scale: 0.86,
     framesMax: 1,
     
