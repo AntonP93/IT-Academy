@@ -171,11 +171,11 @@ const Player1 = new Player({
         x: 165,
         y: 110
     },
-    imgSrc: 'img/king/idle.png',
+    imgSrc: 'img/king/idle1.png',
     framesMax:8,
     sprites:{
         idle:{
-            imgSrc: 'img/king/idle.png',
+            imgSrc: 'img/king/idle1.png',
             framesMax:8   
         },
         run:{
@@ -214,10 +214,10 @@ const Player2 = new Player({
         x: 250,
         y: 165
     },
-    imgSrc: 'img/assasin/idle.png',
+    imgSrc: 'img/assasin/idle2.png',
     sprites:{
         idle:{
-            imgSrc: 'img/assasin/idle.png',
+            imgSrc: 'img/assasin/idle2.png',
             framesMax:4   
         },
         run:{
