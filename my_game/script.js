@@ -249,7 +249,7 @@ const backgrnd = new Sprite({
         y:0
     },
     imgSrc:'img/background.png',
-    scale: 1,
+    scale: 1.28,
     framesMax: 1,
     
 
