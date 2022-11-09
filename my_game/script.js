@@ -21,7 +21,7 @@ CVS.height = 576;
 context.fillRect(0,0,CVS.width, CVS.height);
 
 
-
+// спрайт анимации
 class Sprite {
     constructor({position,imgSrc,scale = 1, framesMax = 1,offset = {x:0,y:0}}){
         this.position = position;
@@ -77,7 +77,8 @@ class Player extends Sprite{
         scale = 1,
         framesMax = 1,
         offset = {x:0,y:0},
-        sprites
+        sprites,
+        attackArm ={offset:{}, width: undefined, height: undefined} 
     }){
         super({
             position,
@@ -98,7 +99,10 @@ class Player extends Sprite{
             position: {
                 x: this.position.x,
                 y: this.position.y
-            },      
+            },
+            offset: attackArm.offset, 
+            width: attackArm.width,
+            height: attackArm.height     
         };
         this.vector = vector
         this.color = color;
@@ -116,8 +120,10 @@ class Player extends Sprite{
     update(){
         this.view();
         this.animateFrm();
-        this.attackArm.position.x = this.position.x - this.vector
-        this.attackArm.position.y = this.position.y
+        this.attackArm.position.x = this.position.x + this.attackArm.offset.x
+        this.attackArm.position.y = this.position.y + this.attackArm.offset.y
+
+        // context.fillRect(this.attackArm.position.x, this.attackArm.position.y, this.attackArm.width, this.attackArm.height)
         
         this.position.x += this.speed.x
         this.position.y +=  this.speed.y ;
@@ -194,7 +200,16 @@ const Player1 = new Player({
             imgSrc: 'img/king/Attack1.png',
             framesMax:4 
         }
+    },
+    attackArm:{
+        offset:{
+            x:60,
+            y:60    
+        },
+        width:160,
+        height:60
     }
+        
 
 });
 // характеристика игрока 2
@@ -236,6 +251,14 @@ const Player2 = new Player({
             imgSrc: 'img/assasin/Attack1.png',
             framesMax:4 
         }
+    },
+    attackArm:{
+        offset:{
+            x:-220,
+            y:40 
+        },
+        width:190,
+        height:80
     }
     
 
@@ -373,7 +396,7 @@ document.addEventListener('keyup',(EO)=>{
 //анимация движения
 function tick(){
     context.fillRect(0,0,CVS.width,CVS.height);
-    backgrnd.update();
+    
     // Игрок1
     // атакует
     if(Player1.attack == true){
@@ -396,7 +419,7 @@ function tick(){
         choiceSprite('fall',Player1)
     }
 
-    Player1.update();
+    
 
     //Игрок 2
     //бежит
@@ -420,8 +443,8 @@ function tick(){
         choiceSprite('fall',Player2)
     }
 
-    
-    
+    backgrnd.update();
+    Player1.update();
     Player2.update();
 
 
