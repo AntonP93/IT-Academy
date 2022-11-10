@@ -8,19 +8,20 @@
     <title>Game</title>
 </head>
 <body>
+    <input class='start_game'type='button'  value='Cтарт игры!' onclick='startGame();'>
     <div class="wrap">
         <div class="health_timer_panel">
             <div class="wrap_health wrap_health1"><div class="health_player1"></div></div>
             
             <div class="timer">
-                10
+                60
             </div>
             <div class="wrap_health wrap_health2"><div class="health_player2"></div></div>
             
         </div>
         <canvas class="field"></canvas>
     </div>
-    
+    <script src="musicscript.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
