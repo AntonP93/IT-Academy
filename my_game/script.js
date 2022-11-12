@@ -12,7 +12,20 @@ const coeffWidth = 0.8;
 const coeffhight = 0.65;
 let gameStatus = 1;
 
-console.log(pageWidth,pageHeight)
+if(window.innerWidth < window.innerHeight ){
+    alert('Переверни устройство')
+    
+}
+if (window.innerWidth > window.innerHeight ) {
+    btnStart.addEventListener('click',startGame,false) 
+ }  
+// console.log(window.innerWidth,window.innerHeight)
+
+
+// window.addEventListener('resize',function(){
+//     console.log(pageWidth,pageHeight)
+// })
+
 
 const grav = 0.3;
 const  hit = 10;
@@ -165,7 +178,6 @@ class Player extends Sprite{
 
 // характеристика игрока 1
 const Player1 = new Player({
-    // name: Player1,
     position: {
         x:0,
         y:0
@@ -187,7 +199,7 @@ const Player1 = new Player({
         x: 165,
         y: 110
     },
-    imgSrc: '../img/king/idle1.png',
+    imgSrc: 'img/king/idle1.png',
     framesMax:8,
     sprites:{
         idle:{
@@ -248,7 +260,7 @@ const Player2 = new Player({
         x: 250,
         y: 165
     },
-    imgSrc: '../img/assasin/idle2.png',
+    imgSrc: 'img/assasin/idle2.png',
     sprites:{
         idle:{
             imgSrc: 'img/assasin/idle2.png',
@@ -446,22 +458,11 @@ document.addEventListener('keyup',(EO)=>{
    
 )
 
-function winnerPlayer(timerCase){
-    clearTimeout(timerCase)
-   if(Player1.health === Player2.health){
-    console.log("ничья")
-   } else if (Player1.health < Player2.health){
-    console.log("победил игрок 2")
-   } else if (Player1.health > Player2.health){
-    console.log("победил игрок 1")
-   } 
 
-}
-function startGame(){
-clickSound(); 
-btnStart.parentNode.removeChild(btnStart)
-wrapStart.style.display = 'inline-block';   
-//таймер райнда
+
+
+
+//таймер
 let timerCase;
 function timer(){
     if(timerRound > 0){
@@ -473,101 +474,116 @@ function timer(){
         winnerPlayer()    
     }   
 }
+//условия победы
+function winnerPlayer(timerCase){
+    clearTimeout(timerCase)
+    if(Player1.health === Player2.health){
+    console.log("ничья")
+    } else if (Player1.health < Player2.health){
+    console.log("победил игрок 2")
+    } else if (Player1.health > Player2.health){
+    console.log("победил игрок 1")
+    } 
+
+}
 timer()
 
-//анимация движения
-function tick(){
+
+function startGame(){
     
-    context.fillRect(0,0,CVS.width,CVS.height);
+    clickSound(); 
+    btnStart.parentNode.removeChild(btnStart)
+    wrapStart.style.display = 'inline-block';   
     
-    // Игрок1
-    // атакует
-    if(Player1.attack == true){
-        choiceSprite('attack',Player1)
-    }  
-    //стоит
-    if(Player1.speed.x == 0){
-        choiceSprite('idle',Player1)
-    }
-    //бежит
-    if(Player1.speed.x !== 0){
-        choiceSprite('run',Player1)
-    }
-    //прыжок
-    if(Player1.speed.y < 0){
-        choiceSprite('jump',Player1)
-    }
-    //падение
-    if(Player1.speed.y > 0){
-        choiceSprite('fall',Player1)
-    }
-
+    //анимация движения
+    function tick(){
     
-
-    //Игрок 2
-    //бежит
-    if(Player2.speed.x !== 0){
-        choiceSprite('run',Player2)
-    }
-    // атакует
-    if(Player2.attack == true){
-        choiceSprite('attack',Player2)
-    }  
-    //стоит
-    if(Player2.speed.x == 0){
-        choiceSprite('idle',Player2)
-    }
-     //прыжок
-     if(Player2.speed.y < 0){
-        choiceSprite('jump',Player2)
-    }
-    //падение
-    if(Player2.speed.y > 0){
-        choiceSprite('fall',Player2)
-    }
-
-    backgrnd.update();
-    Player1.update();
-    Player2.update();
-
-    //регистрация удара
-    if(Player1.attackArm.position.x + Player1.attackArm.width>= Player2.position.x && Player1.attackArm.position.x <= Player2.position.x + Player2.width && Player1.attackArm.position.y + Player1.attackArm.height >= Player2.position.y && Player1.attackArm.position.y <= Player2.position.y + Player2.height && Player1.attack ){
-        console.log('hitPlayer2')
-        if(Player2.health <= 0){
-            choiceSprite('death',Player2)
-        } else {
-            choiceSprite('hit',Player2)
+        context.fillRect(0,0,CVS.width,CVS.height);
+        
+        // Игрок1
+        // атакует
+        if(Player1.attack == true){
+            choiceSprite('attack',Player1)
+        }  
+        //стоит
+        if(Player1.speed.x == 0){
+            choiceSprite('idle',Player1)
         }
-       
-        Player2.hit()
-        healthPlayer2.style.width = Player2.health+'%';
-        Player1.attack = false;
-    }
-    if(Player2.attackArm.position.x + Player2.attackArm.width>= Player1.position.x && Player2.attackArm.position.x <= Player1.position.x + Player1.width && Player2.attackArm.position.y + Player2.attackArm.height >= Player1.position.y && Player2.attackArm.position.y <= Player1.position.y + Player1.height && Player2.attack ){
-        console.log('hitPlayer1')
-        if(Player1.health <= 0){
-            choiceSprite('death',Player1)
-        } else {
+        //бежит
+        if(Player1.speed.x !== 0){
+            choiceSprite('run',Player1)
+        }
+        //прыжок
+        if(Player1.speed.y < 0){
+            choiceSprite('jump',Player1)
+        }
+        //падение
+        if(Player1.speed.y > 0){
+            choiceSprite('fall',Player1)
+        }
+
+        
+
+        //Игрок 2
+        //бежит
+        if(Player2.speed.x !== 0){
+            choiceSprite('run',Player2)
+        }
+        // атакует
+        if(Player2.attack == true){
+            choiceSprite('attack',Player2)
+        }  
+        //стоит
+        if(Player2.speed.x == 0){
+            choiceSprite('idle',Player2)
+        }
+        //прыжок
+        if(Player2.speed.y < 0){
+            choiceSprite('jump',Player2)
+        }
+        //падение
+        if(Player2.speed.y > 0){
+            choiceSprite('fall',Player2)
+        }
+
+        backgrnd.update();
+        Player1.update();
+        Player2.update();
+
+        //регистрация удара
+        if(Player1.attackArm.position.x + Player1.attackArm.width>= Player2.position.x && Player1.attackArm.position.x <= Player2.position.x + Player2.width && Player1.attackArm.position.y + Player1.attackArm.height >= Player2.position.y && Player1.attackArm.position.y <= Player2.position.y + Player2.height && Player1.attack ){
+            console.log('hitPlayer2')
+            if(Player2.health <= 0){
+                choiceSprite('death',Player2)
+            } else {
+                choiceSprite('hit',Player2)
+            }
+        
+            Player2.hit()
+            healthPlayer2.style.width = Player2.health+'%';
+            Player1.attack = false;
+        }
+        if(Player2.attackArm.position.x + Player2.attackArm.width>= Player1.position.x && Player2.attackArm.position.x <= Player1.position.x + Player1.width && Player2.attackArm.position.y + Player2.attackArm.height >= Player1.position.y && Player2.attackArm.position.y <= Player1.position.y + Player1.height && Player2.attack ){
+            console.log('hitPlayer1')
+            if(Player1.health <= 0){
+                choiceSprite('death',Player1)
+            } else {
+                choiceSprite('hit',Player1)
+            }
             choiceSprite('hit',Player1)
+            Player1.hit()
+            healthPlayer1.style.width = Player1.health+'%';
+            Player2.attack = false;
         }
-        choiceSprite('hit',Player1)
-        Player1.hit()
-        healthPlayer1.style.width = Player1.health+'%';
-        Player2.attack = false;
+        
+       
+        if (Player1.health <= 0 || Player2.health <= 0) {
+            winnerPlayer(timerCase)
+        }
+        requestAnimationFrame(tick);
     }
-    if (Player1.health <= 0 || Player2.health <= 0) {
-        winnerPlayer(timerCase)
-    }
-    
     requestAnimationFrame(tick);
 }
-requestAnimationFrame(tick);
-}
-
-
-// function start(){
-//     requestAnimationFrame(tick);
-// };
 
 
 

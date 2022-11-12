@@ -1,6 +1,6 @@
-const clickAudio=new Audio();
+const clickAudio=new Audio(); // музыка
 clickAudio.src = './music/Music.ogg'
-const clickAudioHit=new Audio();
+const clickAudioHit=new Audio(); //удар
 clickAudioHit.src = './music/Hit.ogg'
 function clickSound() {
     clickAudio.play();

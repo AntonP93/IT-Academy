@@ -35,6 +35,7 @@ body{
     background-color:rgb(29, 117, 194);
     height: 100%;
     width: 100%;
+    transition: 0.3s;
 }
 .timer{
     background:url(img/Mortal-Kombat-Logo.png) center center/cover no-repeat;
@@ -47,6 +48,7 @@ body{
     background-color:rgb(29, 117, 194);
     height: 100%;
     width: 100%;
+    transition: 0.3s;
 }
 .timer{
     color: aliceblue;
